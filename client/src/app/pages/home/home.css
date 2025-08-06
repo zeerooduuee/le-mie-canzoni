@@ -1,0 +1,352 @@
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Bubble Animations - Partono da posizioni diverse */
+@keyframes bubble-1 {
+  0% {
+    transform: translateY(120vh) translateX(10vw) scale(1);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(80vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-2 {
+  0% {
+    transform: translateY(120vh) translateX(80vw) scale(1);
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(20vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-3 {
+  0% {
+    transform: translateY(120vh) translateX(50vw) scale(1);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(70vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-4 {
+  0% {
+    transform: translateY(120vh) translateX(30vw) scale(1);
+    opacity: 0.15;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(90vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-5 {
+  0% {
+    transform: translateY(120vh) translateX(70vw) scale(1);
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(10vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-6 {
+  0% {
+    transform: translateY(120vh) translateX(20vw) scale(1);
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(60vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-7 {
+  0% {
+    transform: translateY(120vh) translateX(60vw) scale(1);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(40vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-8 {
+  0% {
+    transform: translateY(120vh) translateX(40vw) scale(1);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(80vw) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Music Bars Animations */
+@keyframes music-bar-1 {
+  0%,
+  100% {
+    height: 12px;
+  }
+  50% {
+    height: 40px;
+  }
+}
+
+@keyframes music-bar-2 {
+  0%,
+  100% {
+    height: 20px;
+  }
+  25% {
+    height: 50px;
+  }
+  75% {
+    height: 15px;
+  }
+}
+
+@keyframes music-bar-3 {
+  0%,
+  100% {
+    height: 30px;
+  }
+  33% {
+    height: 60px;
+  }
+  66% {
+    height: 25px;
+  }
+}
+
+@keyframes music-bar-4 {
+  0%,
+  100% {
+    height: 15px;
+  }
+  40% {
+    height: 45px;
+  }
+  80% {
+    height: 35px;
+  }
+}
+
+@keyframes music-bar-5 {
+  0%,
+  100% {
+    height: 25px;
+  }
+  20% {
+    height: 55px;
+  }
+  60% {
+    height: 20px;
+  }
+}
+
+@keyframes music-bar-6 {
+  0%,
+  100% {
+    height: 35px;
+  }
+  30% {
+    height: 65px;
+  }
+  70% {
+    height: 30px;
+  }
+}
+
+@keyframes music-bar-7 {
+  0%,
+  100% {
+    height: 18px;
+  }
+  45% {
+    height: 48px;
+  }
+  85% {
+    height: 28px;
+  }
+}
+
+@keyframes music-bar-8 {
+  0%,
+  100% {
+    height: 22px;
+  }
+  35% {
+    height: 52px;
+  }
+  65% {
+    height: 32px;
+  }
+}
+
+@keyframes music-bar-9 {
+  0%,
+  100% {
+    height: 28px;
+  }
+  25% {
+    height: 58px;
+  }
+  75% {
+    height: 22px;
+  }
+}
+
+@keyframes music-bar-10 {
+  0%,
+  100% {
+    height: 16px;
+  }
+  50% {
+    height: 42px;
+  }
+}
+
+@keyframes simple-glow {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.4);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 1s ease-out 0.5s both;
+}
+
+/* Bubble Animation Classes con delay diversi - PIÙ LENTE */
+.animate-bubble-1 {
+  animation: bubble-1 16s ease-in-out infinite;
+}
+
+.animate-bubble-2 {
+  animation: bubble-2 20s ease-in-out infinite 4s;
+}
+
+.animate-bubble-3 {
+  animation: bubble-3 14s ease-in-out infinite 8s;
+}
+
+.animate-bubble-4 {
+  animation: bubble-4 24s ease-in-out infinite 2s;
+}
+
+.animate-bubble-5 {
+  animation: bubble-5 18s ease-in-out infinite 12s;
+}
+
+.animate-bubble-6 {
+  animation: bubble-6 22s ease-in-out infinite 6s;
+}
+
+.animate-bubble-7 {
+  animation: bubble-7 15s ease-in-out infinite 10s;
+}
+
+.animate-bubble-8 {
+  animation: bubble-8 17s ease-in-out infinite 3s;
+}
+
+/* Music Bars Animation Classes - PIÙ LENTE */
+.animate-music-bar-1 {
+  animation: music-bar-1 1.6s ease-in-out infinite;
+}
+
+.animate-music-bar-2 {
+  animation: music-bar-2 2.2s ease-in-out infinite;
+}
+
+.animate-music-bar-3 {
+  animation: music-bar-3 1.9s ease-in-out infinite;
+}
+
+.animate-music-bar-4 {
+  animation: music-bar-4 2.5s ease-in-out infinite;
+}
+
+.animate-music-bar-5 {
+  animation: music-bar-5 2.1s ease-in-out infinite;
+}
+
+.animate-music-bar-6 {
+  animation: music-bar-6 1.8s ease-in-out infinite;
+}
+
+.animate-music-bar-7 {
+  animation: music-bar-7 2.3s ease-in-out infinite;
+}
+
+.animate-music-bar-8 {
+  animation: music-bar-8 2.0s ease-in-out infinite;
+}
+
+.animate-music-bar-9 {
+  animation: music-bar-9 2.4s ease-in-out infinite;
+}
+
+.animate-music-bar-10 {
+  animation: music-bar-10 1.7s ease-in-out infinite;
+}
+
+.animate-title-glow {
+  animation: simple-glow 4s ease-in-out infinite;
+  color: white;
+}
+
+/* Posizioni iniziali per le bolle */
+.bubble-1-initial {
+  transform: translateY(120vh) translateX(10vw);
+}
+
+.bubble-2-initial {
+  transform: translateY(120vh) translateX(80vw);
+}
+
+.bubble-3-initial {
+  transform: translateY(120vh) translateX(50vw);
+}
+
+.bubble-4-initial {
+  transform: translateY(120vh) translateX(30vw);
+}
+
+.bubble-5-initial {
+  transform: translateY(120vh) translateX(70vw);
+}
+
+.bubble-6-initial {
+  transform: translateY(120vh) translateX(20vw);
+}
+
+.bubble-7-initial {
+  transform: translateY(120vh) translateX(60vw);
+}
+
+.bubble-8-initial {
+  transform: translateY(120vh) translateX(40vw);
+}

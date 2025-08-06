@@ -1,0 +1,72 @@
+/* Navbar con colori coerenti al tema del sito */
+.navbar {
+  background: linear-gradient(135deg, rgba(88, 28, 135, 0.95), rgba(29, 78, 216, 0.95), rgba(67, 56, 202, 0.95));
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Logo/Brand styling */
+.navbar .btn-ghost {
+  color: white;
+  font-weight: bold;
+  background: linear-gradient(45deg, #f472b6, #a855f7, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.navbar .btn-ghost:hover {
+  background: linear-gradient(45deg, #ec4899, #9333ea, #06b6d4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform: scale(1.05);
+}
+
+/* Avatar button */
+.avatar .btn-circle {
+  border: 2px solid rgba(244, 114, 182, 0.5);
+  transition: all 0.3s ease;
+}
+
+.avatar .btn-circle:hover {
+  border-color: rgba(244, 114, 182, 0.8);
+  box-shadow: 0 0 15px rgba(244, 114, 182, 0.5);
+  transform: scale(1.1);
+}
+
+/* Dropdown menu */
+.dropdown-content {
+  background: linear-gradient(135deg, rgba(88, 28, 135, 0.9), rgba(29, 78, 216, 0.9));
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.dropdown-content li a {
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.dropdown-content li a:hover {
+  background: linear-gradient(135deg, rgba(244, 114, 182, 0.2), rgba(168, 85, 247, 0.2));
+  color: white;
+  transform: translateX(5px);
+}
+
+/* Responsive padding adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
