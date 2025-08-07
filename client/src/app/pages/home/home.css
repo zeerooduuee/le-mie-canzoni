@@ -1,3 +1,6 @@
+/* Home Page Spotify-inspired Styles */
+
+/* Enhanced smooth fade-in animation */
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -9,14 +12,17 @@
   }
 }
 
-/* Bubble Animations - Partono da posizioni diverse */
+/* Green-themed bubble animations */
 @keyframes bubble-1 {
   0% {
     transform: translateY(120vh) translateX(10vw) scale(1);
-    opacity: 0.2;
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.15;
   }
   100% {
-    transform: translateY(-20vh) translateX(80vw) scale(1);
+    transform: translateY(-20vh) translateX(15vw) scale(1);
     opacity: 0;
   }
 }
@@ -24,10 +30,13 @@
 @keyframes bubble-2 {
   0% {
     transform: translateY(120vh) translateX(80vw) scale(1);
-    opacity: 0.25;
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.2;
   }
   100% {
-    transform: translateY(-20vh) translateX(20vw) scale(1);
+    transform: translateY(-20vh) translateX(75vw) scale(1);
     opacity: 0;
   }
 }
@@ -35,10 +44,13 @@
 @keyframes bubble-3 {
   0% {
     transform: translateY(120vh) translateX(50vw) scale(1);
-    opacity: 0.3;
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.25;
   }
   100% {
-    transform: translateY(-20vh) translateX(70vw) scale(1);
+    transform: translateY(-20vh) translateX(55vw) scale(1);
     opacity: 0;
   }
 }
@@ -46,7 +58,7 @@
 @keyframes bubble-4 {
   0% {
     transform: translateY(120vh) translateX(30vw) scale(1);
-    opacity: 0.15;
+    opacity: 0.08;
   }
   100% {
     transform: translateY(-20vh) translateX(90vw) scale(1);

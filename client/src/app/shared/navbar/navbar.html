@@ -1,28 +1,155 @@
-<div class="navbar shadow-lg sticky top-0 left-0 z-50 px-4 sm:px-6 md:px-15 lg:px-30">
+<!-- Spotify-style Navbar with white and green -->
+<div class="navbar bg-white shadow-lg sticky top-0 left-0 z-50 px-4 sm:px-6 md:px-15 lg:px-30 border-b border-gray-200">
   <div class="flex-1">
-    <a class="btn btn-ghost text-xl">Le Mie Canzoni</a>
+    <a class="btn btn-ghost text-xl text-gray-800 hover:bg-gray-100">
+      <img width="512" alt="Spotify icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/512px-Spotify_icon.svg.png?20220821125323">
+      Le Mie Canzoni
+    </a>
   </div>
-  <div class="flex gap-15 items-center">
-    <div class="flex gap-2">
+  
+  <div class="flex gap-4 items-center">
+    <!-- User Profile (when authenticated) -->
+    <div *ngIf="currentUser" class="relative">
       <div class="dropdown dropdown-end">
-        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-          <div class="w-10 rounded-full">
-            <img
-              src="assets/images/ragazza.png"
-              alt="Profile Image" />
-          </div>
-        </div>
-        <ul
+        <button 
+          (click)="toggleUserMenu()"
+          class="btn btn-ghost btn-circle avatar hover:bg-gray-100"
           tabindex="0"
-          class="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow">
-          <li>
-            <a class="justify-between"> Profile </a>
+        >
+          <div class="w-10 rounded-full ring-2 ring-gray-200 hover:ring-green-300 transition-all">
+            <img
+              [src]="getProfilePicture()"
+              [alt]="currentUser.username"
+              class="rounded-full object-cover"
+            />
+          </div>
+        </button>
+        
+        <!-- User Menu Dropdown -->
+        <ul
+          *ngIf="showUserMenu"
+          class="menu menu-sm dropdown-content bg-white rounded-box z-[1] mt-3 w-52 p-2 shadow-lg border border-gray-200"
+          tabindex="0"
+        >
+          <li class="menu-title text-gray-500 text-xs">
+            <span>{{ currentUser.username }}</span>
           </li>
           <li>
-            <a>Logout</a>
+            <a class="text-gray-700 hover:bg-gray-100 hover:text-green-600 justify-between">
+              <span class="flex items-center">
+                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                Profilo
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="text-gray-700 hover:bg-gray-100 hover:text-green-600">
+              <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+              </svg>
+              Le Mie Playlist
+            </a>
+          </li>
+          <li>
+            <a class="text-gray-700 hover:bg-gray-100 hover:text-green-600">
+              <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              Impostazioni
+            </a>
+          </li>
+          <div class="divider my-1"></div>
+          <li>
+            <a 
+              (click)="logout()"
+              class="text-red-600 hover:bg-red-50 hover:text-red-700"
+            >
+              <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              </svg>
+              Logout
+            </a>
           </li>
         </ul>
       </div>
     </div>
+    
+    <!-- Auth Button (when not authenticated) -->
+    <button 
+      *ngIf="!currentUser"
+      (click)="openAuthChoice()"
+      class="btn btn-outline border-green-500 text-green-600 hover:bg-green-600 hover:text-white hover:border-green-600 transition-all duration-300"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+        <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+      </svg>
+      Accedi
+    </button>
   </div>
 </div>
+
+<!-- Click outside to close user menu -->
+<div 
+  *ngIf="showUserMenu" 
+  (click)="closeUserMenu()"
+  class="fixed inset-0 z-40"
+></div>
+
+<!-- Auth Choice Modal - Spotify Style -->
+<div *ngIf="showAuthChoice" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+  <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md mx-4 border border-gray-100">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-900">Benvenuto su Le Mie Canzoni!</h2>
+      <button 
+        (click)="closeAuthChoice()" 
+        class="text-gray-400 hover:text-gray-600 transition-colors"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="text-center mb-8">
+      <p class="text-gray-600 mb-6">
+        Accedi per scoprire milioni di brani, creare playlist e condividere la tua musica preferita.
+      </p>
+      
+      <!-- Buttons -->
+      <div class="space-y-4">
+        <button 
+          (click)="openLogin()"
+          class="w-full bg-green-500 text-white py-3 rounded-full font-semibold hover:bg-green-600 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
+        >
+          Accedi
+        </button>
+        
+        <button 
+          (click)="openRegister()"
+          class="w-full border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:border-green-500 hover:text-green-600 transition-all duration-300"
+        >
+          Registrati gratis
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<app-login 
+  *ngIf="showLogin"
+  (close)="closeLogin()"
+  (switchToRegister)="switchToRegister()"
+></app-login>
+
+<!-- Register Modal -->
+<app-register 
+  *ngIf="showRegister"
+  (close)="closeRegister()"
+  (switchToLogin)="switchToLogin()"
+></app-register>

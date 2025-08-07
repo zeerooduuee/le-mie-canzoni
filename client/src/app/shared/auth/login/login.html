@@ -1,0 +1,108 @@
+<!-- Login Modal - Spotify Style -->
+<div class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm">
+  <div class="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md mx-4 relative">
+    <!-- Header with Spotify-style branding -->
+    <div class="text-center mb-8">
+      <!-- Spotify-style logo -->
+      <div class="w-12 h-12 mx-auto mb-6 bg-green-500 rounded-full flex items-center justify-center">
+        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.062 14.453c-.177.293-.518.387-.824.222-2.262-1.382-5.108-1.695-8.456-.935-.324.074-.648-.16-.722-.486-.074-.324.16-.648.486-.722 3.672-.833 6.853-.475 9.378 1.084.295.178.391.56.214.854l-.076-.017zm1.172-2.605c-.223.366-.697.482-1.063.259-2.589-1.593-6.538-2.053-9.605-1.123-.393.119-.809-.105-.928-.498-.119-.393.105-.809.498-.928 3.516-1.067 7.963-.551 10.839 1.227.366.223.482.697.259 1.063zm.101-2.708C14.692 9.906 9.785 9.672 6.783 10.579c-.465.14-.957-.124-1.097-.589-.14-.465.124-.957.589-1.097 3.48-1.052 8.948-.771 12.458 1.323.423.253.562.804.309 1.227-.253.423-.804.562-1.227.309l.02-.008z"/>
+        </svg>
+      </div>
+      
+      <h2 class="text-3xl font-bold text-gray-900 mb-2">Accedi a Le Mie Canzoni</h2>
+      <p class="text-gray-600">Benvenuto! Entra nel tuo account</p>
+    </div>
+
+    <!-- Close Button -->
+    <button 
+      (click)="onClose()" 
+      class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <!-- Error Alert -->
+    <div *ngIf="error" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+      <div class="flex items-center">
+        <svg class="w-5 h-5 text-red-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-red-700 text-sm font-medium">{{ error }}</span>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Email Field -->
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text text-gray-700 font-semibold">Email</span>
+        </label>
+        <input 
+          type="email" 
+          formControlName="email"
+          placeholder="Inserisci la tua email"
+          class="input input-bordered w-full bg-gray-50 border-gray-300 focus:border-green-500 focus:bg-white transition-all rounded-xl h-14"
+          [class.input-error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+        />
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" 
+             class="mt-2 text-sm text-red-600">
+          <span *ngIf="loginForm.get('email')?.errors?.['required']">Email è richiesta</span>
+          <span *ngIf="loginForm.get('email')?.errors?.['email']">Email non valida</span>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text text-gray-700 font-semibold">Password</span>
+        </label>
+        <input 
+          type="password"
+          formControlName="password"
+          placeholder="Inserisci la tua password"
+          class="input input-bordered w-full bg-gray-50 border-gray-300 focus:border-green-500 focus:bg-white transition-all rounded-xl h-14"
+          [class.input-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        />
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" 
+             class="mt-2 text-sm text-red-600">
+          <span *ngIf="loginForm.get('password')?.errors?.['required']">Password è richiesta</span>
+          <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password deve essere di almeno 6 caratteri</span>
+        </div>
+      </div>
+
+      <!-- Login Button -->
+      <button 
+        type="submit" 
+        [disabled]="loginForm.invalid || isLoading"
+        class="w-full bg-green-500 text-white py-4 rounded-full font-bold text-lg hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none"
+      >
+        <span *ngIf="!isLoading">Accedi</span>
+        <span *ngIf="isLoading" class="flex items-center justify-center">
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Accesso in corso...
+        </span>
+      </button>
+    </form>
+
+    <!-- Divider -->
+    <div class="divider my-8 text-gray-400">oppure</div>
+
+    <!-- Switch to Register -->
+    <div class="text-center">
+      <p class="text-gray-600 mb-4">Non hai ancora un account?</p>
+      <button 
+        (click)="onSwitchToRegister()"
+        class="w-full border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:border-green-500 hover:text-green-600 transition-all duration-300"
+      >
+        Registrati gratis
+      </button>
+    </div>
+  </div>
+</div>
