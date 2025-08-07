@@ -9,7 +9,7 @@ class Utenti(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
-    password = db.Column(db.String(255), nullable=False)
+    _password = db.Column("password", db.String(255), nullable=False)
     nome = db.Column(db.String(100), nullable=False)
     foto = db.Column(db.String(255))
     sesso = db.Column(db.String(1), nullable=False)  # 'm' o 'f'

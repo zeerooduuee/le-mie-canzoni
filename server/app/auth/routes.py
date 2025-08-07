@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify
-from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 import jwt
 from datetime import datetime, timedelta
@@ -16,7 +15,7 @@ def login():
 
     utente = Utenti.query.filter_by(email=email).first()
 
-    if not utente or not check_password_hash(utente.password, password):
+    if not utente or not utente.check_password(password):
         return jsonify({'message': 'Credenziali non valide'}), 401
 
     # Crea token JWT
@@ -48,12 +47,9 @@ def register():
     if Utenti.query.filter_by(email=email).first():
         return jsonify({'message': 'Utente già registrato'}), 400
 
-    # Crea utente con password criptata
-    hashed_password = generate_password_hash(password)
-
     nuovo_utente = Utenti(
         email=email,
-        password=hashed_password,
+        password=password,
         nome=nome,
         sesso=sesso
     )

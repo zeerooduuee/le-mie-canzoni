@@ -1,0 +1,63 @@
+le-mie-canzoni/
+-client/
+--.angular/
+---...
+--.vscode/
+---...
+--node_modules/
+---...
+--public/
+---assets/
+----images/
+-----ragazza.png
+---rega.ico
+--src/
+---app/
+----pages/
+-----home/ (angular components con html, css e ts)
+-----playlist/ (angular components con html, css e ts)
+-----playlists/ (angular components con html, css e ts)
+-----profilo/ (angular components con html, css e ts)
+----shared/
+-----navbar/ (angular components con html, css e ts)
+----app.config.ts
+----app.css
+----app.html
+----app.routes.ts
+----app.ts
+---index.html
+---main.ts
+---styles.css
+--(config files ...)
+-server/
+--app/
+---__pycache__/
+----...
+---auth/
+----__pycache__/
+----__init__.py
+----routes.py
+---canzoni/
+----__pycache__/
+----__init__.py
+----routes.py
+---playlist/
+----__pycache__/
+----__init__.py
+----routes.py
+---utenti/
+----__pycache__/
+----__init__.py
+----routes.py
+---__init__.py
+---config.py
+---models.py
+---routes.py
+--instance/
+---app.db
+--venv/
+---...
+--.env
+--requirements.txt
+--run.py
+--setup_db.py
