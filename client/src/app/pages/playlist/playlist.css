@@ -1,0 +1,196 @@
+/* Playlist page styles */
+.playlist-header {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.9), rgba(59, 130, 246, 0.9), rgba(79, 70, 229, 0.9));
+}
+
+/* Cover image hover effect */
+.playlist-cover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.playlist-cover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Action buttons */
+.play-button {
+  background: linear-gradient(135deg, #10b981, #059669);
+  transition: all 0.3s ease;
+}
+
+.play-button:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+}
+
+/* Songs list styling */
+.song-row {
+  transition: all 0.2s ease;
+}
+
+.song-row:hover {
+  background-color: rgba(249, 250, 251, 0.8);
+  transform: translateX(4px);
+}
+
+/* Song cover mini styling */
+.song-cover {
+  transition: transform 0.2s ease;
+}
+
+.song-row:hover .song-cover {
+  transform: scale(1.1);
+}
+
+/* Play button on hover */
+.play-on-hover {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.song-row:hover .play-on-hover {
+  opacity: 1;
+}
+
+.song-row:hover .track-number {
+  opacity: 0;
+}
+
+/* Column headers */
+.songs-header {
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .playlist-info h1 {
+    font-size: 2rem;
+  }
+  
+  .playlist-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .songs-grid {
+    display: block;
+  }
+  
+  .song-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .song-details {
+    flex: 1;
+  }
+  
+  .song-duration {
+    margin-left: auto;
+  }
+  
+  .desktop-only {
+    display: none;
+  }
+}
+
+/* Custom scrollbar */
+.songs-container {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+}
+
+.songs-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.songs-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.songs-container::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 3px;
+}
+
+.songs-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+/* Animation for play button */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.btn-play:hover {
+  animation: pulse 2s infinite;
+}
+
+/* Gradient text effect for playlist title */
+.playlist-title {
+  background: linear-gradient(45deg, #ffffff, #f1f5f9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Heart button animation */
+.heart-button {
+  transition: all 0.2s ease;
+}
+
+.heart-button:hover {
+  transform: scale(1.1);
+  color: #ef4444;
+}
+
+/* Song info truncation */
+.song-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.song-artist {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.song-album {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+/* Loading skeleton animation */
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+.skeleton {
+  animation: shimmer 1.2s ease-in-out infinite;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 400% 100%;
+}

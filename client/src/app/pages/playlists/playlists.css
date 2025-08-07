@@ -24,6 +24,23 @@
   max-width: 500px;
 }
 
+/* Image upload preview styling */
+.image-upload-preview {
+  transition: all 0.3s ease;
+}
+
+.image-upload-preview:hover {
+  border-color: #8b5cf6;
+  background-color: #f8f9fa;
+}
+
+/* File input styling */
+.file-input:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
 /* Color picker active state */
 .color-active {
   border-color: #6b7280 !important;
@@ -46,5 +63,9 @@
   
   .card-body {
     padding: 1rem;
+  }
+
+  .modal-box {
+    max-width: 90vw;
   }
 }

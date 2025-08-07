@@ -1,1 +1,114 @@
-<p>playlist works!</p>
+<div class="min-h-screen bg-white">
+  <!-- Playlist Header -->
+  <div class="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 text-white py-16">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-start md:items-end gap-6">
+        <!-- Playlist Cover -->
+        <div class="w-48 h-48 bg-gradient-to-br from-pink-400 to-purple-600 rounded-xl shadow-2xl flex items-center justify-center overflow-hidden">
+          <img 
+            src="assets/images/playlist-cover.jpg" 
+            alt="Playlist Cover" 
+            class="w-full h-full object-cover"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="w-full h-full flex items-center justify-center" style="display: none;">
+            <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Playlist Info -->
+        <div class="flex-1">
+          <p class="text-sm font-medium opacity-80 mb-2">PLAYLIST</p>
+          <h1 class="text-4xl md:text-6xl font-bold mb-4 playlist-title">{{ playlist.name }}</h1>
+          <p class="text-lg opacity-90 mb-4">{{ playlist.description }}</p>
+          
+          <!-- Playlist Stats -->
+          <div class="flex items-center gap-4 text-sm opacity-80 playlist-stats">
+            <span class="font-medium">Creata da <strong>{{ playlist.creator }}</strong></span>
+            <span>•</span>
+            <span>{{ playlist.totalSongs }} brani</span>
+            <span>•</span>
+            <span>{{ playlist.totalDuration }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-4 mt-8">
+        <button 
+          (click)="playPlaylist()"
+          class="px-8 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-full hover:from-purple-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 btn-play font-medium flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+          </svg>
+          {{ isPlaying ? 'In riproduzione...' : 'Riproduci' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Songs List -->
+  <div class="container mx-auto px-6 py-8">
+    <!-- Column Headers -->
+    <div class="grid grid-cols-12 gap-4 px-4 py-2 text-sm font-medium text-gray-500 border-b border-gray-200 songs-header">
+      <div class="col-span-1 text-center">#</div>
+      <div class="col-span-6">TITOLO</div>
+      <div class="col-span-2 desktop-only">ALBUM</div>
+      <div class="col-span-2 desktop-only">AGGIUNTO IL</div>
+      <div class="col-span-1 text-center">
+        <svg class="w-4 h-4 mx-auto text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Songs -->
+    <div class="space-y-1 songs-container">
+      <div 
+        *ngFor="let song of songs; let i = index" 
+        class="grid grid-cols-12 gap-4 px-4 py-3 hover:bg-gray-50 rounded-lg group transition-colors cursor-pointer song-row"
+        [class.bg-purple-50]="currentlyPlaying === song.id">
+        
+        <div class="col-span-1 flex items-center justify-center">
+          <span class="text-gray-500 group-hover:hidden track-number" *ngIf="currentlyPlaying !== song.id">{{ i + 1 }}</span>
+          <button 
+            (click)="playSong(song.id)"
+            class="hidden group-hover:block text-gray-700 hover:text-purple-600 play-on-hover"
+            *ngIf="currentlyPlaying !== song.id">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+            </svg>
+          </button>
+          <svg *ngIf="currentlyPlaying === song.id" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-purple-600">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
+          </svg>
+        </div>
+        
+        <div class="col-span-6 flex items-center gap-3">
+          <div [class]="'w-12 h-12 bg-gradient-to-br ' + song.coverColor + ' rounded-lg flex items-center justify-center song-cover'">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-medium text-gray-900 song-title" [class.text-purple-600]="currentlyPlaying === song.id">{{ song.title }}</h3>
+            <p class="text-sm text-gray-500 song-artist">{{ song.artist }}</p>
+          </div>
+        </div>
+        
+        <div class="col-span-2 flex items-center text-sm text-gray-500 desktop-only">
+          <span class="song-album">{{ song.album }}</span>
+        </div>
+        
+        <div class="col-span-2 flex items-center text-sm text-gray-500 desktop-only">
+          {{ song.addedDate }}
+        </div>
+        
+        <div class="col-span-1 flex items-center justify-center text-sm text-gray-500">
+          {{ song.duration }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
