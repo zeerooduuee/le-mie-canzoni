@@ -1,0 +1,215 @@
+/* Home Page Spotify-inspired Styles */
+
+/* Enhanced smooth fade-in animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Green-themed bubble animations */
+@keyframes bubble-1 {
+  0% {
+    transform: translateY(120vh) translateX(10vw) scale(1);
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(15vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-2 {
+  0% {
+    transform: translateY(120vh) translateX(80vw) scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(75vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-3 {
+  0% {
+    transform: translateY(120vh) translateX(50vw) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(55vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-4 {
+  0% {
+    transform: translateY(120vh) translateX(30vw) scale(1);
+    opacity: 0.08;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(90vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-5 {
+  0% {
+    transform: translateY(120vh) translateX(70vw) scale(1);
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(10vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-6 {
+  0% {
+    transform: translateY(120vh) translateX(20vw) scale(1);
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(60vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-7 {
+  0% {
+    transform: translateY(120vh) translateX(60vw) scale(1);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(40vw) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-8 {
+  0% {
+    transform: translateY(120vh) translateX(40vw) scale(1);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-20vh) translateX(80vw) scale(1);
+    opacity: 0;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 1s ease-out 0.5s both;
+}
+
+/* Bubble Animation Classes con delay diversi - PIÙ LENTE */
+.animate-bubble-1 {
+  animation: bubble-1 16s ease-in-out infinite;
+}
+
+.animate-bubble-2 {
+  animation: bubble-2 20s ease-in-out infinite 4s;
+}
+
+.animate-bubble-3 {
+  animation: bubble-3 14s ease-in-out infinite 8s;
+}
+
+.animate-bubble-4 {
+  animation: bubble-4 24s ease-in-out infinite 2s;
+}
+
+.animate-bubble-5 {
+  animation: bubble-5 18s ease-in-out infinite 12s;
+}
+
+.animate-bubble-6 {
+  animation: bubble-6 22s ease-in-out infinite 6s;
+}
+
+.animate-bubble-7 {
+  animation: bubble-7 15s ease-in-out infinite 10s;
+}
+
+.animate-bubble-8 {
+  animation: bubble-8 17s ease-in-out infinite 3s;
+}
+
+/* Posizioni iniziali per le bolle */
+.bubble-1-initial {
+  transform: translateY(120vh) translateX(10vw);
+}
+
+.bubble-2-initial {
+  transform: translateY(120vh) translateX(80vw);
+}
+
+.bubble-3-initial {
+  transform: translateY(120vh) translateX(50vw);
+}
+
+.bubble-4-initial {
+  transform: translateY(120vh) translateX(30vw);
+}
+
+.bubble-5-initial {
+  transform: translateY(120vh) translateX(70vw);
+}
+
+.bubble-6-initial {
+  transform: translateY(120vh) translateX(20vw);
+}
+
+.bubble-7-initial {
+  transform: translateY(120vh) translateX(60vw);
+}
+
+.bubble-8-initial {
+  transform: translateY(120vh) translateX(40vw);
+}
+
+/* Fix per Modal Animation - Glassmorphism Photo Modal */
+.modal#change_photo_modal {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal#change_photo_modal:not(.modal-open) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal#change_photo_modal.modal-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal#change_photo_modal .modal-box {
+  transition: all 0.3s ease-in-out;
+  will-change: transform, opacity;
+}
+
+.modal#change_photo_modal .modal-backdrop {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Animazioni per la chiusura */
+.modal#change_photo_modal[closing] .modal-box {
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+.modal#change_photo_modal[closing] .modal-backdrop {
+  opacity: 0;
+}

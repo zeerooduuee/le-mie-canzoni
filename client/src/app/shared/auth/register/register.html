@@ -1,23 +1,21 @@
-<!-- Register Modal - Spotify Style -->
-<div class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 backdrop-blur-sm">
-  <div class="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md mx-4 relative">
+<!-- Register Modal - Spotify Glassmorphism Style -->
+<div class="fixed inset-0 bg-gradient-to-br from-green-500/20 via-green-400/10 to-green-600/20 backdrop-blur-md flex items-center justify-center z-50">
+  <div class="bg-white/85 backdrop-blur-xl p-10 rounded-3xl shadow-2xl w-full max-w-md mx-4 relative border border-white/40 backdrop-saturate-150">
     <!-- Header with Spotify-style branding -->
     <div class="text-center mb-8">
       <!-- Spotify-style logo -->
-      <div class="w-12 h-12 mx-auto mb-6 bg-green-500 rounded-full flex items-center justify-center">
-        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.062 14.453c-.177.293-.518.387-.824.222-2.262-1.382-5.108-1.695-8.456-.935-.324.074-.648-.16-.722-.486-.074-.324.16-.648.486-.722 3.672-.833 6.853-.475 9.378 1.084.295.178.391.56.214.854l-.076-.017zm1.172-2.605c-.223.366-.697.482-1.063.259-2.589-1.593-6.538-2.053-9.605-1.123-.393.119-.809-.105-.928-.498-.119-.393.105-.809.498-.928 3.516-1.067 7.963-.551 10.839 1.227.366.223.482.697.259 1.063zm.101-2.708C14.692 9.906 9.785 9.672 6.783 10.579c-.465.14-.957-.124-1.097-.589-.14-.465.124-.957.589-1.097 3.48-1.052 8.948-.771 12.458 1.323.423.253.562.804.309 1.227-.253.423-.804.562-1.227.309l.02-.008z"/>
-        </svg>
+      <div class="w-12 h-12 mx-auto mb-6 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center shadow-lg">
+        <img width="512" alt="Spotify icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/512px-Spotify_icon.svg.png?20220821125323">
       </div>
       
-      <h2 class="text-3xl font-bold text-gray-900 mb-2">Registrati gratis</h2>
-      <p class="text-gray-600">Crea il tuo account per iniziare ad ascoltare</p>
+      <h2 class="text-3xl font-bold bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent mb-2">Registrati</h2>
+      <p class="text-gray-600/90">Crea il tuo account per iniziare ad ascoltare</p>
     </div>
 
     <!-- Close Button -->
     <button 
       (click)="onClose()" 
-      class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors"
+      class="absolute top-6 right-6 text-gray-400 hover:text-green-600 transition-all duration-300 hover:scale-110 hover:rotate-90 p-1 rounded-full hover:bg-green-50/50"
     >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -25,7 +23,7 @@
     </button>
 
     <!-- Error Alert -->
-    <div *ngIf="error" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+    <div *ngIf="error" class="mb-6 p-4 bg-red-50/80 backdrop-blur-sm border border-red-200/60 rounded-xl">
       <div class="flex items-center">
         <svg class="w-5 h-5 text-red-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
@@ -45,7 +43,7 @@
           type="text" 
           formControlName="username"
           placeholder="Scegli un nome utente"
-          class="input input-bordered w-full bg-gray-50 border-gray-300 focus:border-green-500 focus:bg-white transition-all rounded-xl h-14"
+          class="input input-bordered w-full bg-white/60 backdrop-blur-sm border-gray-300/60 focus:border-green-500 focus:bg-white/80 transition-all rounded-xl h-14 focus:ring-2 focus:ring-green-500/20"
           [class.input-error]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
         />
         <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" 
@@ -64,7 +62,7 @@
           type="email" 
           formControlName="email"
           placeholder="Inserisci la tua email"
-          class="input input-bordered w-full bg-gray-50 border-gray-300 focus:border-green-500 focus:bg-white transition-all rounded-xl h-14"
+          class="input input-bordered w-full bg-white/60 backdrop-blur-sm border-gray-300/60 focus:border-green-500 focus:bg-white/80 transition-all rounded-xl h-14 focus:ring-2 focus:ring-green-500/20"
           [class.input-error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
         />
         <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" 
@@ -83,7 +81,7 @@
           type="password"
           formControlName="password"
           placeholder="Crea una password"
-          class="input input-bordered w-full bg-gray-50 border-gray-300 focus:border-green-500 focus:bg-white transition-all rounded-xl h-14"
+          class="input input-bordered w-full bg-white/60 backdrop-blur-sm border-gray-300/60 focus:border-green-500 focus:bg-white/80 transition-all rounded-xl h-14 focus:ring-2 focus:ring-green-500/20"
           [class.input-error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
         />
         <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" 
@@ -102,7 +100,7 @@
           type="password"
           formControlName="confirmPassword"
           placeholder="Conferma la password"
-          class="input input-bordered w-full bg-gray-50 border-gray-300 focus:border-green-500 focus:bg-white transition-all rounded-xl h-14"
+          class="input input-bordered w-full bg-white/60 backdrop-blur-sm border-gray-300/60 focus:border-green-500 focus:bg-white/80 transition-all rounded-xl h-14 focus:ring-2 focus:ring-green-500/20"
           [class.input-error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
         />
         <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" 
@@ -116,7 +114,7 @@
       <button 
         type="submit" 
         [disabled]="registerForm.invalid || isLoading"
-        class="w-full bg-green-500 text-white py-4 rounded-full font-bold text-lg hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none mt-8"
+        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-2xl font-bold text-lg hover:from-green-600 hover:to-green-700 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 disabled:transform-none mt-8 backdrop-blur-sm"
       >
         <span *ngIf="!isLoading">Registrati gratis</span>
         <span *ngIf="isLoading" class="flex items-center justify-center">
@@ -134,10 +132,10 @@
 
     <!-- Switch to Login -->
     <div class="text-center">
-      <p class="text-gray-600 mb-4">Hai già un account?</p>
+      <p class="text-gray-600/90 mb-4">Hai già un account?</p>
       <button 
         (click)="onSwitchToLogin()"
-        class="w-full border-2 border-gray-300 text-gray-700 py-3 rounded-full font-semibold hover:border-green-500 hover:text-green-600 transition-all duration-300"
+        class="w-full border-2 border-green-400/60 bg-white/60 backdrop-blur-sm text-green-700 py-3 rounded-2xl font-semibold hover:border-green-500 hover:text-green-800 hover:bg-green-50/80 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-md hover:shadow-lg"
       >
         Accedi al tuo account
       </button>

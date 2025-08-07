@@ -24,6 +24,28 @@ export class Playlists {
   openModal() {
     this.selectedImage = null; // Reset image when opening modal
     const modal = document.getElementById('add_playlist_modal') as HTMLDialogElement;
+    modal.classList.add('modal-open');
     modal.showModal();
+  }
+
+  closeModal() {
+    const modal = document.getElementById('add_playlist_modal') as HTMLDialogElement;
+    // Aggiungi attributo per animazione di chiusura
+    modal.setAttribute('closing', 'true');
+    modal.classList.remove('modal-open');
+    
+    // Aspetta l'animazione prima di chiudere davvero
+    setTimeout(() => {
+      modal.close();
+      modal.removeAttribute('closing');
+    }, 300);
+  }
+
+  createPlaylistAndClose() {
+    // Qui potresti aggiungere la logica per creare la playlist
+    console.log('Creating playlist with image:', this.selectedImage);
+    
+    // Chiudi con animazione
+    this.closeModal();
   }
 }

@@ -5,18 +5,15 @@
   <!-- Playlist Header -->
   <div class="relative z-10 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white py-20">
     <div class="container mx-auto px-6">
-      <div class="flex flex-col md:flex-row items-start md:items-end gap-8">
+      <div class="flex flex-col md:flex-row items-center md:items-center gap-8">
         <!-- Playlist Cover -->
-        <div class="w-56 h-56 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl shadow-2xl flex items-center justify-center overflow-hidden hover:shadow-3xl transition-all duration-300">
+        <div class="w-56 h-56 rounded-2xl shadow-2xl flex items-center justify-center overflow-hidden hover:shadow-3xl transition-all duration-300 flex-shrink-0">
           <img 
-            src="assets/images/playlist-cover.jpg" 
+            src="assets/images/ragazza-2.jpg" 
             alt="Playlist Cover" 
             class="w-full h-full object-cover"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
           <div class="w-full h-full flex items-center justify-center bg-white bg-opacity-10" style="display: none;">
-            <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
-            </svg>
           </div>
         </div>
 
@@ -49,20 +46,8 @@
         <button 
           (click)="playPlaylist()"
           class="w-16 h-16 bg-green-500 hover:bg-green-400 rounded-full hover:scale-110 transition-all duration-300 btn-play font-medium flex items-center justify-center shadow-2xl group">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-7 h-7 text-white ml-1 group-hover:scale-110 transition-transform">
-            <path d="M8 5.14v14l11-7-11-7z"/>
-          </svg>
-        </button>
-        
-        <button class="w-12 h-12 border-2 border-white border-opacity-30 hover:border-opacity-100 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-          </svg>
-        </button>
-        
-        <button class="w-12 h-12 border-2 border-white border-opacity-30 hover:border-opacity-100 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 text-white group-hover:scale-110 transition-transform">
+            <path fill-rule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clip-rule="evenodd" />
           </svg>
         </button>
       </div>
@@ -84,74 +69,10 @@
       <div class="col-span-2 desktop-only">ALBUM</div>
       <div class="col-span-2 desktop-only">AGGIUNTO IL</div>
       <div class="col-span-1 text-center">
-        <svg class="w-4 h-4 mx-auto text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-green-600">
+          <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z" clip-rule="evenodd" />
         </svg>
-      </div>
-    </div>
 
-    <!-- Songs -->
-    <div class="space-y-1 songs-container">
-      <div 
-        *ngFor="let song of songs; let i = index" 
-        class="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-green-50 rounded-xl group transition-all duration-300 cursor-pointer song-row border border-transparent hover:border-green-100"
-        [class.bg-green-50]="currentlyPlaying === song.id"
-        [class.border-green-200]="currentlyPlaying === song.id">
-        
-        <div class="col-span-1 flex items-center justify-center">
-          <span class="text-gray-500 group-hover:hidden track-number font-medium" *ngIf="currentlyPlaying !== song.id">{{ i + 1 }}</span>
-          <button 
-            (click)="playSong(song.id)"
-            class="hidden group-hover:flex items-center justify-center w-8 h-8 text-gray-700 hover:text-green-600 play-on-hover transition-colors"
-            *ngIf="currentlyPlaying !== song.id">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
-              <path d="M8 5.14v14l11-7-11-7z"/>
-            </svg>
-          </button>
-          <div *ngIf="currentlyPlaying === song.id" class="flex items-center justify-center">
-            <div class="flex space-x-1">
-              <div class="w-1 h-4 bg-green-500 animate-pulse"></div>
-              <div class="w-1 h-4 bg-green-500 animate-pulse" style="animation-delay: 0.1s"></div>
-              <div class="w-1 h-4 bg-green-500 animate-pulse" style="animation-delay: 0.2s"></div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="col-span-6 flex items-center gap-4">
-          <div [class]="'w-14 h-14 bg-gradient-to-br ' + song.coverColor + ' rounded-xl flex items-center justify-center song-cover shadow-md'">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
-            </svg>
-          </div>
-          <div>
-            <h3 class="font-semibold text-gray-900 song-title group-hover:text-green-600 transition-colors" [class.text-green-600]="currentlyPlaying === song.id">{{ song.title }}</h3>
-            <p class="text-sm text-gray-500 song-artist">{{ song.artist }}</p>
-          </div>
-        </div>
-        
-        <div class="col-span-2 flex items-center text-sm text-gray-500 desktop-only">
-          <span class="song-album hover:text-gray-700 transition-colors cursor-pointer">{{ song.album }}</span>
-        </div>
-        
-        <div class="col-span-2 flex items-center text-sm text-gray-500 desktop-only">
-          {{ song.addedDate }}
-        </div>
-        
-        <div class="col-span-1 flex items-center justify-center">
-          <div class="flex items-center gap-3">
-            <button class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <svg class="w-4 h-4 text-gray-400 hover:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-              </svg>
-            </button>
-            <span class="text-sm text-gray-500 font-medium">{{ song.duration }}</span>
-            <button class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <svg class="w-4 h-4 text-gray-400 hover:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>

@@ -1,0 +1,33 @@
+/* Fix per Modal Animation - Glassmorphism Playlist Modal */
+.modal#add_playlist_modal {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal#add_playlist_modal:not(.modal-open) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal#add_playlist_modal.modal-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal#add_playlist_modal .modal-box {
+  transition: all 0.3s ease-in-out;
+  will-change: transform, opacity;
+}
+
+.modal#add_playlist_modal .modal-backdrop {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Animazioni per la chiusura */
+.modal#add_playlist_modal[closing] .modal-box {
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+.modal#add_playlist_modal[closing] .modal-backdrop {
+  opacity: 0;
+}

@@ -325,11 +325,6 @@
   animation: music-bar-10 1.7s ease-in-out infinite;
 }
 
-.animate-title-glow {
-  animation: simple-glow 4s ease-in-out infinite;
-  color: white;
-}
-
 /* Posizioni iniziali per le bolle */
 .bubble-1-initial {
   transform: translateY(120vh) translateX(10vw);
