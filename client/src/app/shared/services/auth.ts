@@ -1,110 +1,147 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable, tap, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface User {
-  id: string;
+  id: number;
   email: string;
-  username: string;
-  profilePicture?: string;
+  nome: string;
+  foto?: string;
 }
 
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-export interface RegisterRequest {
-  email: string;
-  username: string;
-  password: string;
-}
-
-export interface AuthResponse {
+export interface LoginResponse {
   token: string;
-  user: User;
+  nome: string;
+  foto?: string;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
-export class Auth {
-  private readonly API_URL = 'http://localhost:3000/api'; // Adjust this to your API URL
-  private userSubject = new BehaviorSubject<User | null>(null);
-  public user$ = this.userSubject.asObservable();
+export interface RegisterData {
+  email: string;
+  password: string;
+  nome: string;
+  sesso: string;
+}
 
-  constructor(private http: HttpClient) {
-    this.checkToken();
+export interface LoginData {
+  email: string;
+  password: string;
+}
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private apiUrl = 'http://localhost:5000/auth';
+  private authStatus = new BehaviorSubject<boolean>(this.hasToken());
+  private currentUser = new BehaviorSubject<User | null>(this.getUserFromToken());
+
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
+
+  register(data: RegisterData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, data);
   }
 
-  private checkToken(): void {
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Decode JWT token to get user info
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        if (payload.exp > Date.now() / 1000) {
-          this.userSubject.next({
-            id: payload.id,
-            email: payload.email,
-            username: payload.username,
-            profilePicture: payload.profilePicture
-          });
-        } else {
-          this.logout();
-        }
-      } catch (error) {
-        this.logout();
-      }
-    }
-  }
-
-  login(credentials: LoginRequest): Observable<AuthResponse> {
-    return new Observable(observer => {
-      this.http.post<AuthResponse>(`${this.API_URL}/auth/login`, credentials).subscribe({
-        next: (response) => {
-          localStorage.setItem('token', response.token);
-          this.userSubject.next(response.user);
-          observer.next(response);
-          observer.complete();
-        },
-        error: (error) => {
-          observer.error(error);
-        }
-      });
-    });
-  }
-
-  register(userData: RegisterRequest): Observable<AuthResponse> {
-    return new Observable(observer => {
-      this.http.post<AuthResponse>(`${this.API_URL}/auth/register`, userData).subscribe({
-        next: (response) => {
-          localStorage.setItem('token', response.token);
-          this.userSubject.next(response.user);
-          observer.next(response);
-          observer.complete();
-        },
-        error: (error) => {
-          observer.error(error);
-        }
-      });
-    });
+  login(data: LoginData): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, data).pipe(
+      tap((res: LoginResponse) => {
+        // Save token to localStorage
+        localStorage.setItem('token', res.token);
+        
+        // Update auth status
+        this.authStatus.next(true);
+        
+        // Create user object and save to current user
+        const user: User = {
+          id: this.getIdFromToken(res.token),
+          email: this.getEmailFromToken(res.token),
+          nome: res.nome,
+          foto: res.foto
+        };
+        
+        this.currentUser.next(user);
+        
+        // Redirect to dashboard/home
+        this.router.navigate(['/']);
+      })
+    );
   }
 
   logout(): void {
     localStorage.removeItem('token');
-    this.userSubject.next(null);
+    this.authStatus.next(false);
+    this.currentUser.next(null);
+    this.router.navigate(['/']);
   }
 
-  isAuthenticated(): boolean {
-    return this.userSubject.value !== null;
+  isAuthenticated(): Observable<boolean> {
+    return this.authStatus.asObservable();
   }
 
-  getCurrentUser(): User | null {
-    return this.userSubject.value;
+  getCurrentUser(): Observable<User | null> {
+    return this.currentUser.asObservable();
   }
 
   getToken(): string | null {
     return localStorage.getItem('token');
+  }
+
+  private hasToken(): boolean {
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+    
+    // Check if token is expired
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const isExpired = payload.exp * 1000 < Date.now();
+      return !isExpired;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  private getUserFromToken(): User | null {
+    const token = localStorage.getItem('token');
+    if (!token || !this.hasToken()) return null;
+    
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return {
+        id: payload.id,
+        email: payload.email,
+        nome: payload.nome || '',
+        foto: payload.foto
+      };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  private getIdFromToken(token: string): number {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.id;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  private getEmailFromToken(token: string): string {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.email;
+    } catch (e) {
+      return '';
+    }
+  }
+
+  // HTTP Interceptor helper
+  getAuthHeaders(): HttpHeaders {
+    const token = this.getToken();
+    return new HttpHeaders({
+      'Authorization': token ? `Bearer ${token}` : '',
+      'Content-Type': 'application/json'
+    });
   }
 }

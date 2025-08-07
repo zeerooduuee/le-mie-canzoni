@@ -5,6 +5,7 @@ from flask_cors import CORS
 from .models import db
 from .routes import main
 from .auth.routes import auth
+from .utenti.routes import utenti
 
 def create_app():
     # Crea l'app Flask
@@ -18,5 +19,6 @@ def create_app():
 
     app.register_blueprint(main)
     app.register_blueprint(auth, url_prefix='/auth')
+    app.register_blueprint(utenti, url_prefix='/utenti')
 
     return app

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Login } from '../auth/login/login';
 import { Register } from '../auth/register/register';
-import { Auth, User } from '../services/auth';
+import { AuthService, User } from '../services/auth';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -13,23 +13,32 @@ import { Subscription } from 'rxjs';
 })
 export class Navbar implements OnInit, OnDestroy {
   currentUser: User | null = null;
+  isAuthenticated = false;
   showAuthChoice = false;
   showLogin = false;
   showRegister = false;
   showUserMenu = false;
   
   private userSubscription: Subscription = new Subscription();
+  private authSubscription: Subscription = new Subscription();
 
-  constructor(private authService: Auth) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.userSubscription = this.authService.user$.subscribe(user => {
+    // Subscribe to authentication status
+    this.authSubscription = this.authService.isAuthenticated().subscribe(isAuth => {
+      this.isAuthenticated = isAuth;
+    });
+
+    // Subscribe to current user
+    this.userSubscription = this.authService.getCurrentUser().subscribe(user => {
       this.currentUser = user;
     });
   }
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
+    this.authSubscription.unsubscribe();
   }
 
   openAuthChoice(): void {
@@ -82,6 +91,6 @@ export class Navbar implements OnInit, OnDestroy {
   }
 
   getProfilePicture(): string {
-    return this.currentUser?.profilePicture || 'https://via.placeholder.com/40x40/9CA3AF/FFFFFF?text=' + (this.currentUser?.username?.charAt(0).toUpperCase() || 'U');
+    return this.currentUser?.foto || 'assets/images/default-avatar.png';
   }
 }

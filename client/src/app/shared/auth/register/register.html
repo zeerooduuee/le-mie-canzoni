@@ -22,6 +22,16 @@
       </svg>
     </button>
 
+    <!-- Success Alert -->
+    <div *ngIf="success" class="mb-6 p-4 bg-green-50/80 backdrop-blur-sm border border-green-200/60 rounded-xl">
+      <div class="flex items-center">
+        <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-green-700 text-sm font-medium">{{ success }}</span>
+      </div>
+    </div>
+
     <!-- Error Alert -->
     <div *ngIf="error" class="mb-6 p-4 bg-red-50/80 backdrop-blur-sm border border-red-200/60 rounded-xl">
       <div class="flex items-center">
@@ -34,22 +44,22 @@
 
     <!-- Register Form -->
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5">
-      <!-- Username Field -->
+      <!-- Nome Field -->
       <div class="form-control">
         <label class="label">
-          <span class="label-text text-gray-700 font-semibold">Nome Utente</span>
+          <span class="label-text text-gray-700 font-semibold">Nome</span>
         </label>
         <input 
           type="text" 
-          formControlName="username"
-          placeholder="Scegli un nome utente"
+          formControlName="nome"
+          placeholder="Inserisci il tuo nome"
           class="input input-bordered w-full bg-white/60 backdrop-blur-sm border-gray-300/60 focus:border-green-500 focus:bg-white/80 transition-all rounded-xl h-14 focus:ring-2 focus:ring-green-500/20"
-          [class.input-error]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+          [class.input-error]="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched"
         />
-        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" 
+        <div *ngIf="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched" 
              class="mt-2 text-sm text-red-600">
-          <span *ngIf="registerForm.get('username')?.errors?.['required']">Nome utente è richiesto</span>
-          <span *ngIf="registerForm.get('username')?.errors?.['minlength']">Nome utente deve essere di almeno 3 caratteri</span>
+          <span *ngIf="registerForm.get('nome')?.errors?.['required']">Nome è richiesto</span>
+          <span *ngIf="registerForm.get('nome')?.errors?.['minlength']">Nome deve essere di almeno 2 caratteri</span>
         </div>
       </div>
 
@@ -107,6 +117,27 @@
              class="mt-2 text-sm text-red-600">
           <span *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Conferma password è richiesta</span>
           <span *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch']">Le password non corrispondono</span>
+        </div>
+      </div>
+
+      <!-- Sesso Field -->
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text text-gray-700 font-semibold">Sesso</span>
+        </label>
+        <select 
+          formControlName="sesso"
+          class="select select-bordered w-full bg-white/60 backdrop-blur-sm border-gray-300/60 focus:border-green-500 focus:bg-white/80 transition-all rounded-xl h-14 focus:ring-2 focus:ring-green-500/20"
+          [class.select-error]="registerForm.get('sesso')?.invalid && registerForm.get('sesso')?.touched"
+        >
+          <option value="" disabled>Seleziona il tuo sesso</option>
+          <option value="M">Maschio</option>
+          <option value="F">Femmina</option>
+          <option value="A">Altro</option>
+        </select>
+        <div *ngIf="registerForm.get('sesso')?.invalid && registerForm.get('sesso')?.touched" 
+             class="mt-2 text-sm text-red-600">
+          <span *ngIf="registerForm.get('sesso')?.errors?.['required']">Sesso è richiesto</span>
         </div>
       </div>
 

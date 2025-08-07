@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-register',
@@ -16,16 +16,18 @@ export class Register {
   registerForm: FormGroup;
   isLoading = false;
   error = '';
+  success = '';
 
   constructor(
     private fb: FormBuilder,
-    private authService: Auth
+    private authService: AuthService
   ) {
     this.registerForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
+      nome: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]]
+      confirmPassword: ['', [Validators.required]],
+      sesso: ['', [Validators.required]]
     }, { validators: this.passwordMatchValidator });
   }
 
@@ -47,21 +49,32 @@ export class Register {
   }
 
   onSubmit(): void {
-    if (this.registerForm.valid) {
+    if (this.registerForm.valid && !this.isLoading) {
       this.isLoading = true;
       this.error = '';
+      this.success = '';
       
       const { confirmPassword, ...userData } = this.registerForm.value;
       
       this.authService.register(userData).subscribe({
-        next: () => {
+        next: (response) => {
           this.isLoading = false;
-          this.close.emit();
+          this.success = 'Registrazione completata! Ora puoi effettuare il login.';
+          
+          // Automatically switch to login after success
+          setTimeout(() => {
+            this.switchToLogin.emit();
+          }, 2000);
         },
         error: (err) => {
           this.isLoading = false;
-          this.error = err.error?.message || 'Errore durante la registrazione';
+          this.error = err.error?.message || 'Errore durante la registrazione. Riprova più tardi.';
         }
+      });
+    } else {
+      // Mark all fields as touched to show validation errors
+      Object.keys(this.registerForm.controls).forEach(key => {
+        this.registerForm.get(key)?.markAsTouched();
       });
     }
   }

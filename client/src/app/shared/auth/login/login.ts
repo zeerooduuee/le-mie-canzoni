@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -19,27 +19,28 @@ export class Login {
 
   constructor(
     private fb: FormBuilder,
-    private authService: Auth
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
-
+  
   onSubmit(): void {
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid && !this.isLoading) {
       this.isLoading = true;
       this.error = '';
       
       this.authService.login(this.loginForm.value).subscribe({
-        next: () => {
+        next: (response) => {
           this.isLoading = false;
           this.close.emit();
+          // Success! Auth service handles navigation
         },
         error: (err) => {
           this.isLoading = false;
-          this.error = err.error?.message || 'Errore durante il login';
+          this.error = err.error?.message || 'Errore durante il login. Verifica le tue credenziali.';
         }
       });
     }
