@@ -32,3 +32,33 @@ def login():
         'nome': utente.nome,
         'foto': utente.foto
     }), 200
+
+@auth.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    nome = data.get('nome')
+    sesso = data.get('sesso')  # opzionale, ma nel modello ce l’hai
+
+    if not email or not password or not nome or not sesso:
+        return jsonify({'message': 'Campi mancanti'}), 400
+
+    # Controlla se utente già esiste
+    if Utenti.query.filter_by(email=email).first():
+        return jsonify({'message': 'Utente già registrato'}), 400
+
+    # Crea utente con password criptata
+    hashed_password = generate_password_hash(password)
+
+    nuovo_utente = Utenti(
+        email=email,
+        password=hashed_password,
+        nome=nome,
+        sesso=sesso
+    )
+
+    db.session.add(nuovo_utente)
+    db.session.commit()
+
+    return jsonify({'message': 'Registrazione avvenuta con successo!'}), 201

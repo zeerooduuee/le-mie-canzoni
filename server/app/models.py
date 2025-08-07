@@ -35,7 +35,7 @@ class Playlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255), nullable=False)
     copertina = db.Column(db.String(255))
-    utente = db.Column(db.Integer, db.ForeignKey('utenti.id'), nullable=False)
+    utente_id = db.Column(db.Integer, db.ForeignKey('utenti.id'), nullable=False)
 
     playlist_canzoni = db.relationship('PlaylistCanzoni', backref='playlist', lazy=True)
 
@@ -54,7 +54,7 @@ class Canzoni(db.Model):
 class PlaylistCanzoni(db.Model):
     __tablename__ = 'playlist_canzoni'
 
-    playlist = db.Column(db.Integer, db.ForeignKey('playlist.id'), primary_key=True)
-    canzone = db.Column(db.String(100), db.ForeignKey('canzoni.spotify_id'), primary_key=True)
+    playlist_id = db.Column(db.Integer, db.ForeignKey('playlist.id'), primary_key=True)
+    canzone_id = db.Column(db.String(100), db.ForeignKey('canzoni.spotify_id'), primary_key=True)
     posizione = db.Column(db.Integer)
     added_on = db.Column(db.Date, default=datetime.utcnow)
