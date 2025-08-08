@@ -9,7 +9,7 @@ export interface ProfiloUtente {
   email: string;
   sesso: string;
   foto: string | null;
-  data_registrazione: string | null;
+  data_creazione: string | null;
 }
 
 @Injectable({

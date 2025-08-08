@@ -59,10 +59,10 @@ export class Profilo implements OnInit {
     return this.profiloService.getFotoUrl(this.profilo?.foto || null);
   }
 
-  getDataRegistrazione(): string {
-    if (!this.profilo?.data_registrazione) return 'Data non disponibile';
+  getDataCreazione(): string {
+    if (!this.profilo?.data_creazione) return 'Data non disponibile';
     
-    const data = new Date(this.profilo.data_registrazione);
+    const data = new Date(this.profilo.data_creazione);
     return data.toLocaleDateString('it-IT', { 
       year: 'numeric', 
       month: 'long'
