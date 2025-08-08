@@ -3,7 +3,6 @@ import jwt
 import os
 import time
 from werkzeug.utils import secure_filename
-from flask import send_from_directory
 from ..models import db, Utenti
 from ..config import SECRET_KEY
 
@@ -53,7 +52,7 @@ def upload_foto_profilo():
             if not utente:
                 return jsonify({'error': 'Utente non trovato'}), 404
                 
-            utente.foto = f"/utenti/uploads/profile_pictures/{filename}"
+            utente.foto = f"/uploads/foto-profilo/{filename}"
             db.session.commit()
             
             return jsonify({
@@ -69,11 +68,6 @@ def upload_foto_profilo():
         return jsonify({'error': 'Token non valido'}), 401
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-# Endpoint per servire le immagini
-@utenti.route('/uploads/profile_pictures/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(UPLOAD_FOLDER, filename)
 
 @utenti.route('/profilo', methods=['GET'])
 def get_profilo():
@@ -98,7 +92,7 @@ def get_profilo():
             'email': utente.email,
             'sesso': utente.sesso,
             'foto': utente.foto,
-            'data_registrazione': utente.data_registrazione.isoformat() if utente.data_registrazione else None
+            'data_creazione': utente.data_creazione.isoformat() if utente.data_creazione else None
         }), 200
         
     except jwt.ExpiredSignatureError:

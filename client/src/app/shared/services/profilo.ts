@@ -56,19 +56,10 @@ export class ProfiloService {
   // Ottieni URL completo per la foto
   getFotoUrl(fotoPath: string | null): string {
     if (!fotoPath) {
-      return 'assets/images/default-avatar.png';
+    return '';
     }
-    
-    // Se il path inizia con /utenti/uploads, costruisci l'URL completo
-    if (fotoPath.startsWith('/utenti/uploads')) {
-      return `http://localhost:5000${fotoPath}`;
-    }
-    
-    // Se il path inizia con /uploads (vecchio formato), aggiorna
-    if (fotoPath.startsWith('/uploads')) {
-      return `http://localhost:5000/utenti${fotoPath}`;
-    }
-    
-    return fotoPath;
+
+    // Ritorna il path così com'è, Angular lo gestisce da /assets/ in su
+    return `http://localhost:5000${fotoPath}`;
   }
 }
