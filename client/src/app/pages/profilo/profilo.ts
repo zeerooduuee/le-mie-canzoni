@@ -133,6 +133,9 @@ export class Profilo implements OnInit {
         console.log('Foto caricata con successo:', response);
         this.isUploading = false;
         
+        // Aggiorna l'utente corrente nell'AuthService con la nuova foto
+        this.authService.updateCurrentUser({ foto: response.foto_url });
+        
         // Ricarica i dati del profilo per aggiornare la foto
         this.loadProfilo();
         
@@ -165,11 +168,21 @@ export class Profilo implements OnInit {
     this.profiloService.updateProfilo(updateData).subscribe({
       next: (response) => {
         console.log('Profilo aggiornato:', response);
+        
+        // Aggiorna l'utente corrente nell'AuthService se è stato cambiato il nome
+        if (updateData.nome) {
+          this.authService.updateCurrentUser({ nome: updateData.nome });
+        }
+        
         this.loadProfilo(); // Ricarica i dati
       },
       error: (error) => {
         console.error('Errore nell\'aggiornamento:', error);
       }
     });
+  }
+
+  onImageError(event: any): void {
+    event.target.src = 'assets/images/default-avatar.png';
   }
 }

@@ -83,6 +83,37 @@ export class AuthService {
     return this.currentUser.asObservable();
   }
 
+  // Aggiorna l'utente corrente (utile dopo modifiche al profilo)
+  updateCurrentUser(userData: Partial<User>): void {
+    const current = this.currentUser.getValue();
+    if (current) {
+      const updatedUser = { ...current, ...userData };
+      this.currentUser.next(updatedUser);
+    }
+  }
+
+  // Carica i dati del profilo completi dal server
+  loadUserProfile(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`
+    });
+
+    return this.http.get(`http://localhost:5000/utenti/profilo`, { headers }).pipe(
+      tap((profilo: any) => {
+        const current = this.currentUser.getValue();
+        if (current) {
+          // Aggiorna l'utente corrente con i dati completi del profilo
+          const updatedUser: User = {
+            ...current,
+            nome: profilo.nome,
+            foto: profilo.foto
+          };
+          this.currentUser.next(updatedUser);
+        }
+      })
+    );
+  }
+
   getToken(): string | null {
     return localStorage.getItem('token');
   }
@@ -111,7 +142,7 @@ export class AuthService {
         id: payload.id,
         email: payload.email,
         nome: payload.nome || '',
-        foto: payload.foto
+        foto: payload.foto || null  // Se non c'è foto nel token, usa null
       };
     } catch (e) {
       return null;

@@ -56,7 +56,7 @@ export class ProfiloService {
   // Ottieni URL completo per la foto
   getFotoUrl(fotoPath: string | null): string {
     if (!fotoPath) {
-    return '';
+      return 'assets/images/ragazza-1.png';
     }
 
     // Ritorna il path così com'è, Angular lo gestisce da /assets/ in su

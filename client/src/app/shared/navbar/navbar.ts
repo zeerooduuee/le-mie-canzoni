@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Login } from '../auth/login/login';
 import { Register } from '../auth/register/register';
 import { AuthService, User } from '../services/auth';
+import { ProfiloService } from '../services/profilo';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -22,7 +23,10 @@ export class Navbar implements OnInit, OnDestroy {
   private userSubscription: Subscription = new Subscription();
   private authSubscription: Subscription = new Subscription();
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private profiloService: ProfiloService
+  ) {}
 
   ngOnInit(): void {
     // Subscribe to authentication status
@@ -33,6 +37,18 @@ export class Navbar implements OnInit, OnDestroy {
     // Subscribe to current user
     this.userSubscription = this.authService.getCurrentUser().subscribe(user => {
       this.currentUser = user;
+      
+      // Se l'utente è autenticato ma non ha la foto, carica il profilo completo
+      if (user && !user.foto) {
+        this.authService.loadUserProfile().subscribe({
+          next: () => {
+            // I dati del profilo sono stati caricati e l'utente è stato aggiornato automaticamente
+          },
+          error: (error) => {
+            console.error('Errore nel caricamento del profilo:', error);
+          }
+        });
+      }
     });
   }
 
@@ -91,6 +107,13 @@ export class Navbar implements OnInit, OnDestroy {
   }
 
   getProfilePicture(): string {
-    return this.currentUser?.foto || 'assets/images/default-avatar.png';
+    if (this.currentUser?.foto) {
+      return this.profiloService.getFotoUrl(this.currentUser.foto);
+    }
+    return 'assets/images/ragazza-1.png';
+  }
+
+  onImageError(event: any): void {
+    event.target.src = 'assets/images/default-avatar.png';
   }
 }

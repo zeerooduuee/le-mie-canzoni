@@ -19,6 +19,7 @@
             <img
               [src]="getProfilePicture()"
               [alt]="currentUser.nome"
+              (error)="onImageError($event)"
               class="rounded-full object-cover"
             />
           </div>
